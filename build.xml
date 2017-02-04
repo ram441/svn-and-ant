@@ -58,12 +58,12 @@
     </war>
 	</target>
 	
-	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpathref="classpath"/>
+	<!--taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpathref="classpath"/>
 	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" classpathref="classpath"/>
 	
 	<target name="start" description="start application in tomcat">
 	<start url="${tomcat-manager-url}" username="${tomcat-manager-username}"password="${tomcat-manager-password}" path="${path}"/>
-	</target>
+	</target-->
 	
 	
 	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"     classpathref="classpath"/>
@@ -78,9 +78,9 @@
 	</target>
 	
 	
-	<target name="stop" description="stop application in tomcat">
+	<!--target name="stop" description="stop application in tomcat">
     <stop url="${tomcat-manager-url}" username="${tomcat-manager-username}"password="${tomcat-manager-password}" path="${path}"/>
-	</target>
+	</target-->
 	
 	<waitfor maxwait="10" maxwaitunit="second">
     <and>
