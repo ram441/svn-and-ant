@@ -1,0 +1,133 @@
+<project name="HelloWorld" default="run" basedir=".">
+
+
+<property name="bld" value="build"/>
+	<property name="src" value="src"/>
+	<property name="lib.dir"     value="lib"/>
+	<property name="jar.dir"     value="${bld}/jar"/>
+	<property name="war.dir"     value="${bld}/war"/>
+    <property name="main.class"  value="oata.HelloWorld"/>
+	<property name="report.dir"  value="${bld}/junitreport"/>
+	<property name="url"  value="http://localhost:8081/manager/text"/>
+	<property name="username"  value="MRMR"/>
+	<property name="password"  value="11441"/>
+	<property name="path" value="/mohan"/>
+	
+	<path id="classpath">
+    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+	
+	<echo message=" Who is running this build - ${user.name}"/>
+	
+	<target name="clean">
+    <delete dir="${bld}"/>
+    <delete file="C:\Users\MRMR\MY_DEMO\src\oata\HelloWorld.java"/>
+    </target>
+	
+	<target name="export" depends="clean">
+    <exec executable="C:\Program Files\VisualSVN Server\bin\svn">
+    <arg value="export"/>
+    <arg value="https://desktop-uer6uae:8443/svn/mohan/trunk/src/oata/HelloWorld.java"/>
+    <arg value="C:\Users\MRMR\MY_DEMO\src\oata"/>
+    </exec>
+    </target>
+	
+
+	<target name="compile" depends="export">
+    <mkdir dir="${bld}/classes"/>
+    <javac srcdir="${src}" destdir="${bld}/classes" classpathref="classpath"/>
+    </target>
+	
+    <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}"/>
+    <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${bld}/classes">
+    <manifest>
+    <attribute name="Main-Class" value="${main.class}"/>
+    </manifest>
+    </jar>
+    </target>
+	
+	<target name="war" depends="compile">
+	<delete file="${war.dir}" />
+	<war destfile="HelloWorld.war" basedir="${bld}/classes" webxml="C:\Users\MRMR\MY_DEMO\WebContent\WEB-INF">
+	<fileset dir="WebContent">
+    <include name="**/*.*"/>
+    </fileset>
+    </war>
+	</target>
+	
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpathref="classpath"/>
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" classpathref="classpath"/>
+	
+	<target name="start" description="start application in tomcat">
+	<start url="${tomcat-manager-url}" username="${tomcat-manager-username}"password="${tomcat-manager-password}" path="${path}"/>
+	</target>
+	
+	
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"     classpathref="classpath"/>
+    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="classpath"/>
+	
+	<target name="deploy" depends="undeploy">
+	<deploy url="${url}" username="${username}" password="${password}" war="HelloWorld.war" path="${path}"/>
+	</target>
+	
+	<target name="undeploy" depends="war,jar">
+	<undeploy url="${url}" username="${username}" password="${password}" path="${path}"/>	
+	</target>
+	
+	
+	<target name="stop" description="stop application in tomcat">
+    <stop url="${tomcat-manager-url}" username="${tomcat-manager-username}"password="${tomcat-manager-password}" path="${path}"/>
+	</target>
+	
+	<waitfor maxwait="10" maxwaitunit="second">
+    <and>
+    <socket server="dbserver" port="1521"/>
+    <http url="http://webserver/mypage.html"/>
+    </and>
+    </waitfor>
+	
+	
+	
+	
+	<target name="run">
+	<buildnumber/>
+	<tstamp/>
+	<echo>${TODAY}</echo>
+	
+	<!--delete file="C:\Users\MRMR\src\oata\HelloWorld.zip"/>
+	<zip basedir="C:\Users\MRMR\src\oata" destfile="C:\Users\MRMR\src\oata\HelloWorld.zip"/>
+	<unzip src="C:\Users\MRMR\src\oata\HelloWorld.zip" dest="C:\Users\MRMR\src\oata"/>
+    <java fork="true" classname="${main.class}">
+    <classpath>
+    <path refid="classpath"/>
+    <path refid="application"/>
+    </classpath>
+    </java-->
+    
+	</target>
+
+    
+	<target name="junit" depends="jar">
+    <mkdir dir="${report.dir}"/>
+    <junit printsummary="yes">
+    <classpath>
+    <path refid="classpath"/>
+    <path refid="application"/>
+    </classpath>
+    <formatter type="xml"/>
+    <batchtest fork="yes" todir="${report.dir}">
+    <fileset dir="${src}" includes="*Test.java"/>
+    </batchtest>
+    </junit>
+    </target>
+    
+	<target name="junitreport">
+    <junitreport todir="${report.dir}">
+    <fileset dir="${report.dir}" includes="TEST-*.xml"/>
+    <report todir="${report.dir}"/>
+    </junitreport>
+    </target>
+	</project>

@@ -1,0 +1,40 @@
+8
+
+dir
+106
+https://sai-pc:8443/svn/MyRepo4/trunk/FirstServlet/WebContent/WEB-INF
+https://sai-pc:8443/svn/MyRepo4
+
+
+
+2016-02-01T09:37:28.299720Z
+101
+saichand
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+f270650c-d630-3546-9f9f-e4667ec27b6e
+
+web.xml
+file
+
+
+
+
+2016-02-13T07:02:15.060000Z
+5a39e992479636395b395d7419646332
+2016-02-01T09:37:28.299720Z
+101
+saichand
+

@@ -1,0 +1,40 @@
+8
+
+dir
+106
+https://sai-pc:8443/svn/MyRepo4/trunk/FirstServlet/WebContent/META-INF
+https://sai-pc:8443/svn/MyRepo4
+
+
+
+2016-02-01T09:37:28.299720Z
+101
+saichand
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+f270650c-d630-3546-9f9f-e4667ec27b6e
+
+MANIFEST.MF
+file
+
+
+
+
+2016-02-13T07:02:14.396000Z
+b10f37c8bb1803d98c127a01d1a71cc5
+2016-02-01T09:37:28.299720Z
+101
+saichand
+
